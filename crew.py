@@ -2,17 +2,15 @@
 import os
 import time
 
-import litellm
-from crewai import LLM, Crew, Process
+from crewai import Crew, Process
 
 import agent_chair
 import agent_method
 import agent_problem
 import agent_structure
 import agent_writing
+from groq_llm import GroqLLM
 from config import MAX_TOKENS_CHAIR, MAX_TOKENS_REVIEWER, MODEL_LIGHT, MODEL_PRIMARY
-
-litellm.drop_params = True  # silently drop params a model does not support
 
 # CrewAI shows an interactive 20s "view traces?" prompt on its first run. There is no terminal on
 # Streamlit Cloud, so record "first run done, no consent" up front to skip the prompt entirely.
@@ -36,16 +34,19 @@ class PanelError(Exception):
     """Error with a message that is safe to show to the user."""
 
 
-def _llm(model: str, max_tokens: int) -> LLM:
+def _llm(model: str, max_tokens: int) -> GroqLLM:
     key = os.environ.get("GROQ_API_KEY", "")
     if not key:
         raise PanelError("GROQ_API_KEY is missing. Add it in Streamlit Cloud > App settings > Secrets.")
-    return LLM(model=f"groq/{model}", api_key=key, temperature=0.2, max_tokens=max_tokens,
-               reasoning_effort="low", num_retries=2)
+    return GroqLLM(model=model, api_key=key, max_tokens=max_tokens)
 
 
 def _friendly(e: Exception) -> str:
     m = str(e).lower()
+    if "access denied" in m or "network settings" in m or "403" in m:
+        return ("Groq blocked the request (HTTP 403 'Access denied'). This is a network/IP block on Groq's side, "
+                "not a bug in the app. Try: reboot the app, create a new Groq API key, try again later, "
+                "or contact Groq support with the app's region. Details: " + str(e)[:160])
     if "401" in m or "invalid api key" in m or "authentication" in m:
         return "Groq rejected the API key. Check GROQ_API_KEY in your Streamlit secrets."
     if "429" in m or "rate limit" in m or "rate_limit" in m:

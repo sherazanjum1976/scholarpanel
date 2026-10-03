@@ -170,8 +170,10 @@ with st.sidebar:
     mode = st.radio("Execution", ["Parallel (faster)", "Sequential (gentler on rate limits)"])
     st.divider()
     st.markdown("**API status**")
-    st.success("GROQ_API_KEY detected") if has_key else st.error("GROQ_API_KEY missing")
-    if not has_key:
+    if has_key:
+        st.success("GROQ_API_KEY detected")
+    else:
+        st.error("GROQ_API_KEY missing")
         st.caption("Streamlit Cloud → your app → ⋮ → Settings → Secrets, then add:\n\n"
                    "`GROQ_API_KEY = \"your_key_here\"`")
     st.markdown("**Models**")

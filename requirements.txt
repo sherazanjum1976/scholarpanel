@@ -1,6 +1,7 @@
 # Python 3.12 recommended (select it in Streamlit Cloud > Advanced settings)
 # Resolved and verified with `pip check` on Python 3.12.
 crewai[litellm]==1.9.3
+groq==0.31.1
 streamlit==1.50.0
 fastembed==0.7.3
 faiss-cpu==1.12.0
