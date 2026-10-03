@@ -10,6 +10,7 @@ import time
 
 import streamlit as st
 
+from groq_llm import get_key, key_name, ping, provider
 from config import EXCERPT_CHARS, MAX_DOC_CHARS, MIN_DOC_CHARS, MODEL_LIGHT, MODEL_PRIMARY
 from utils import (AGENT_LABELS, build_report_md, check_sections, compute_overall, decide,
                    detect_doc_type, extract_text, finalize_text, input_hash, parse_review,
@@ -34,13 +35,14 @@ AGENT_LABELS_ALL = {**AGENT_LABELS, "chair": "Panel Chair"}
 
 # ------------------------------------------------------------------ helpers
 def load_key() -> bool:
-    try:
-        k = st.secrets.get("GROQ_API_KEY")
-    except Exception:
-        k = None
-    if k:
-        os.environ["GROQ_API_KEY"] = str(k)
-    return bool(os.environ.get("GROQ_API_KEY"))
+    for name in ("GROQ_API_KEY", "CEREBRAS_API_KEY", "LLM_PROVIDER"):
+        try:
+            v = st.secrets.get(name)
+        except Exception:
+            v = None
+        if v:
+            os.environ[name] = str(v)
+    return bool(get_key())
 
 
 @st.cache_resource(show_spinner="Loading guideline knowledge base...")
@@ -171,9 +173,16 @@ with st.sidebar:
     st.divider()
     st.markdown("**API status**")
     if has_key:
-        st.success("GROQ_API_KEY detected")
+        st.success(f"{key_name()} detected (provider: {provider()})")
+        if st.button("🔌 Test connection"):
+            with st.spinner("Contacting the LLM provider..."):
+                ok, msg = ping()
+            if ok:
+                st.success(msg)
+            else:
+                st.error(msg)
     else:
-        st.error("GROQ_API_KEY missing")
+        st.error(f"{key_name()} missing")
         st.caption("Streamlit Cloud → your app → ⋮ → Settings → Secrets, then add:\n\n"
                    "`GROQ_API_KEY = \"your_key_here\"`")
     st.markdown("**Models**")
@@ -243,7 +252,7 @@ if not text:
 
 if go and text:
     if not has_key:
-        st.error("GROQ_API_KEY is not configured. See the sidebar for instructions.")
+        st.error(f"{key_name()} is not configured. See the sidebar for instructions.")
     else:
         parallel = mode.startswith("Parallel")
         key = input_hash(text, doc_type, level, parallel)

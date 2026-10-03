@@ -1,5 +1,4 @@
 """CrewAI orchestration: 4 reviewers (parallel) -> Panel Chair."""
-import os
 import time
 
 from crewai import Crew, Process
@@ -9,7 +8,7 @@ import agent_method
 import agent_problem
 import agent_structure
 import agent_writing
-from groq_llm import GroqLLM
+from groq_llm import GroqLLM, get_key, key_name
 from config import MAX_TOKENS_CHAIR, MAX_TOKENS_REVIEWER, MODEL_LIGHT, MODEL_PRIMARY
 
 # CrewAI shows an interactive 20s "view traces?" prompt on its first run. There is no terminal on
@@ -35,9 +34,9 @@ class PanelError(Exception):
 
 
 def _llm(model: str, max_tokens: int) -> GroqLLM:
-    key = os.environ.get("GROQ_API_KEY", "")
+    key = get_key()
     if not key:
-        raise PanelError("GROQ_API_KEY is missing. Add it in Streamlit Cloud > App settings > Secrets.")
+        raise PanelError(f"{key_name()} is missing. Add it in Streamlit Cloud > App settings > Secrets.")
     return GroqLLM(model=model, api_key=key, max_tokens=max_tokens)
 
 
@@ -45,8 +44,8 @@ def _friendly(e: Exception) -> str:
     m = str(e).lower()
     if "access denied" in m or "network settings" in m or "403" in m:
         return ("Groq blocked the request (HTTP 403 'Access denied'). This is a network/IP block on Groq's side, "
-                "not a bug in the app. Try: reboot the app, create a new Groq API key, try again later, "
-                "or contact Groq support with the app's region. Details: " + str(e)[:160])
+                "not a bug in the app and not a key problem. Use the sidebar 'Test connection' button, reboot the app, "
+                "or switch provider/host (see README). Details: " + str(e)[:160])
     if "401" in m or "invalid api key" in m or "authentication" in m:
         return "Groq rejected the API key. Check GROQ_API_KEY in your Streamlit secrets."
     if "429" in m or "rate limit" in m or "rate_limit" in m:
