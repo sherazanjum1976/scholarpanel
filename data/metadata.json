@@ -1,0 +1,114 @@
+[
+ {
+  "id": "seed-01",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Synopsis Format",
+  "page": "-",
+  "text": "Synopsis must contain: title, abstract, introduction/background, problem statement, literature review, research gap, research questions or hypotheses, objectives, methodology, expected outcomes, ethical considerations, work plan/timeline and references."
+ },
+ {
+  "id": "seed-02",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Synopsis Length",
+  "page": "-",
+  "text": "A synopsis should normally be 3,000 to 5,000 words (10 to 15 pages), double-spaced, 12-point font. The abstract must not exceed 300 words."
+ },
+ {
+  "id": "seed-03",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Title Rules",
+  "page": "-",
+  "text": "The title must be specific, not exceed 20 words, and reflect the variables, population and context of the study. Overly broad titles are returned for revision."
+ },
+ {
+  "id": "seed-04",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Problem Statement",
+  "page": "-",
+  "text": "The problem statement must identify a clearly evidenced research gap supported by recent literature (preferably last five years) and explain why solving it matters."
+ },
+ {
+  "id": "seed-05",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Objectives",
+  "page": "-",
+  "text": "Objectives must be specific, measurable, achievable, relevant and time-bound, use action verbs, and map one-to-one to the research questions or hypotheses."
+ },
+ {
+  "id": "seed-06",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Degree Level Expectations",
+  "page": "-",
+  "text": "MS research should demonstrate sound application of existing methods to a defined problem. PhD research must show an original, publishable contribution to knowledge or theory."
+ },
+ {
+  "id": "seed-07",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Methodology",
+  "page": "-",
+  "text": "The methodology must justify the research design, define population and sampling technique with sample size justification, describe data collection instruments with validity and reliability evidence, and state the analysis techniques."
+ },
+ {
+  "id": "seed-08",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Ethics",
+  "page": "-",
+  "text": "All studies involving human participants, personal data or animals require approval of the Institutional Ethics Committee before data collection. Synopses must state informed consent and data confidentiality procedures."
+ },
+ {
+  "id": "seed-09",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Plagiarism",
+  "page": "-",
+  "text": "Total similarity must not exceed 19% and similarity from any single source must not exceed 5%, excluding references. A plagiarism report must accompany submission."
+ },
+ {
+  "id": "seed-10",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Citations",
+  "page": "-",
+  "text": "A single recognised citation style (APA 7th, IEEE or as required by the department) must be used consistently. Every in-text citation must appear in the reference list and vice versa."
+ },
+ {
+  "id": "seed-11",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Thesis Structure",
+  "page": "-",
+  "text": "A thesis must include title page, declaration, acknowledgements, abstract, table of contents, list of tables and figures, introduction, literature review, methodology, results, discussion, conclusion with recommendations, references and appendices."
+ },
+ {
+  "id": "seed-12",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Thesis Evaluation",
+  "page": "-",
+  "text": "Thesis evaluation considers originality, rigor of methodology, quality of analysis, coherence between objectives and conclusions, writing quality, and at least one publication or submission for PhD candidates."
+ },
+ {
+  "id": "seed-13",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Timeline",
+  "page": "-",
+  "text": "The work plan must present realistic milestones. MS research should complete within 24 months and PhD within 36 to 48 months of registration, with semester-wise progress targets."
+ },
+ {
+  "id": "seed-14",
+  "doc": "Sample Graduate Handbook (generic - replace with your university's)",
+  "category": "Graduate Studies",
+  "section": "Language",
+  "page": "-",
+  "text": "Writing must be formal, impersonal and concise. Avoid unsupported claims, long run-on sentences, and excessive passive voice. Technical terms must be defined at first use."
+ }
+]

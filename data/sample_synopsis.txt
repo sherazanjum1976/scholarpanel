@@ -1,0 +1,31 @@
+SYNOPSIS FOR MS RESEARCH
+
+Title: Artificial Intelligence in Education
+
+Abstract
+This study looks at artificial intelligence and how it is used in education. AI is becoming very popular nowadays and many students use it. The study will find out the effect of AI on students and also on teachers. The results will be useful for everyone in the education sector.
+
+1. Introduction
+Artificial intelligence has changed the world. It is used in many fields like health, business and education. In education, tools like chatbots are being used by students to do their assignments. Many people think that this is good and many think it is bad. There is a lot of discussion about this in the world and in Pakistan also. Teachers are worried that students are not learning properly because AI is doing the work for them. It was reported by some researchers that AI improves performance (Smith, 2015). Therefore this research is needed.
+
+2. Problem Statement
+Students are using AI tools and there are problems in education because of this.
+
+3. Literature Review
+Many studies have been done on AI. Jones (2012) discussed machine learning. Ahmed et al. (2016) discussed computers in classrooms. Some researchers say AI is good and some say it is bad. More research is needed.
+
+4. Objectives
+- To study the effect of AI on education.
+- To understand the opinion of students and teachers.
+- To give recommendations.
+
+5. Methodology
+The research will be carried out using a mixed method approach. Data will be collected from universities using questionnaires and some interviews. A suitable number of students will be selected. The data will be analysed using suitable statistical tools. The results will be discussed and conclusions will be drawn.
+
+6. Expected Outcomes
+The study will help improve education and will be beneficial for policy makers, teachers and students.
+
+References
+Smith, J. (2015). AI and learning. Journal of Technology.
+Jones, A. (2012). Machine learning basics. Tech Press.
+Ahmed, R., Khan, S. (2016). Computers in classrooms. Education Review.
