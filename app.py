@@ -20,11 +20,27 @@ st.set_page_config(page_title="ScholarPanel - AI Review Panel", page_icon="🎓"
 
 st.markdown("""
 <style>
-.hero{background:linear-gradient(120deg,#312E81,#4F46E5 60%,#7C3AED);padding:1.6rem 2rem;border-radius:16px;color:#fff;margin-bottom:1rem}
-.hero h1{margin:0;font-size:2.1rem;color:#fff}.hero p{margin:.3rem 0 0;opacity:.92;font-size:1.05rem}
+.hero{background:linear-gradient(120deg,#312E81,#4F46E5 60%,#7C3AED);padding:1.6rem 2rem;border-radius:16px;margin-bottom:1rem}
+.hero h1{margin:0;font-size:2.1rem;color:#FFFFFF !important}
+.hero p{margin:.4rem 0 0;font-size:1.02rem;line-height:1.5;color:#F1F5F9 !important}
+.hero b{color:#FFFFFF !important}
 .card{background:#F3F4F8;border-radius:12px;padding:.8rem .9rem;height:100%;border-top:4px solid #4F46E5;font-size:.85rem}
-.card b{font-size:.95rem}.chair{border-top-color:#7C3AED;background:#EEEAFB}
+.card, .card *{color:#1F2937 !important}
+.card b{font-size:.95rem;color:#111827 !important}
+.chair{border-top-color:#7C3AED;background:#EEEAFB}
 .big{font-size:2.2rem;font-weight:700;color:#4F46E5;line-height:1.1}
+
+/* Always-visible scrollbars (Chrome, Edge, Safari) */
+*::-webkit-scrollbar{width:14px;height:14px}
+*::-webkit-scrollbar-track{background:#D1D5DB;border-radius:8px}
+*::-webkit-scrollbar-thumb{background:#4F46E5;border-radius:8px;border:3px solid #D1D5DB}
+*::-webkit-scrollbar-thumb:hover{background:#3730A3}
+*::-webkit-scrollbar-corner{background:#D1D5DB}
+/* Firefox */
+@supports (-moz-appearance:none){*{scrollbar-width:auto;scrollbar-color:#4F46E5 #D1D5DB}}
+/* Result tab bar: make it scrollable with a visible bar */
+div[data-baseweb="tab-list"]{overflow-x:auto !important;overflow-y:hidden !important;padding-bottom:10px}
+div[data-baseweb="tab-list"]::-webkit-scrollbar{height:12px}
 </style>""", unsafe_allow_html=True)
 
 REVIEWERS = ["structure", "problem", "method", "writing"]
@@ -129,6 +145,7 @@ def render_result(res):
                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     st.download_button("⬇️ Download report (Markdown)", res["md"], "ScholarPanel_Report.md", "text/markdown")
 
+    st.caption("↔ More tabs are available: scroll the tab bar sideways to see Methodology, Writing and Sources & Checks.")
     tabs = st.tabs(["👨‍⚖️ Panel Report"] + [f"{ICONS[k]} {AGENT_LABELS[k].split(' & ')[0]}" for k in REVIEWERS]
                    + ["📚 Sources & Checks"])
     with tabs[0]:
@@ -174,7 +191,7 @@ with st.sidebar:
     st.markdown("**API status**")
     if has_key:
         st.success(f"{key_name()} detected (provider: {provider()})")
-        if st.button("🔌 Test connection"):
+        if st.button("🔌 Test connection with the LLM (Groq)" if provider() == "groq" else f"🔌 Test connection with the LLM ({provider().title()})", help="Sends one tiny request to the language model provider to confirm your API key and network access work."):
             with st.spinner("Contacting the LLM provider..."):
                 ok, msg = ping()
             if ok:
@@ -194,8 +211,11 @@ with st.sidebar:
 
 # ------------------------------------------------------------------ header
 st.markdown("""<div class='hero'><h1>🎓 ScholarPanel</h1>
-<p>An AI review committee for MS/PhD synopses and theses - four specialist reviewers work in parallel,
-a Panel Chair merges their verdicts into a scored, prioritised revision roadmap.</p></div>""", unsafe_allow_html=True)
+<p>An AI review committee for MS/PhD synopses and theses. Four specialist reviewers work in parallel,
+and a Panel Chair merges their verdicts into a scored, prioritised revision roadmap.</p>
+<p><b>Grounded in your university's own rules:</b> handbook and guideline text is converted into embeddings
+and stored in a <b>FAISS</b> vector index. <b>RAG</b> (Retrieval-Augmented Generation) retrieves the most relevant
+rules for each reviewer, so feedback cites real regulations instead of guesses.</p></div>""", unsafe_allow_html=True)
 
 cols = st.columns(5)
 cards = [("structure", "Checks format & required sections"), ("problem", "Tests gap, questions & objectives"),
