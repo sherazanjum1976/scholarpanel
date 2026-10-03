@@ -20,33 +20,46 @@ st.set_page_config(page_title="ScholarPanel - AI Review Panel", page_icon="🎓"
 
 st.markdown("""
 <style>
-.hero{background:linear-gradient(120deg,#312E81,#4F46E5 60%,#7C3AED);padding:1.6rem 2rem;border-radius:16px;margin-bottom:1rem}
-.hero h1{margin:0;font-size:2.1rem;color:#FFFFFF !important}
-.hero p{margin:.4rem 0 0;font-size:1.02rem;line-height:1.5;color:#F1F5F9 !important}
-.hero b{color:#FFFFFF !important}
-.card{background:#F3F4F8;border-radius:12px;padding:.8rem .9rem;height:100%;border-top:4px solid #4F46E5;font-size:.85rem}
-.card, .card *{color:#1F2937 !important}
-.card b{font-size:.95rem;color:#111827 !important}
-.chair{border-top-color:#7C3AED;background:#EEEAFB}
-.big{font-size:2.2rem;font-weight:700;color:#4F46E5;line-height:1.1}
+/* ---------- Colours: stronger contrast, always dark text on light surfaces ---------- */
+.stApp{background:#DDE3FA}
+[data-testid="stSidebar"]{background:#B9C4F5;border-right:4px solid #4F46E5}
+.stApp [data-testid="stMarkdownContainer"] p, .stApp [data-testid="stMarkdownContainer"] li,
+.stApp label, .stApp h1, .stApp h2, .stApp h3, .stApp h4,
+.stApp [data-testid="stCaptionContainer"], .stApp [data-testid="stCaptionContainer"] p{color:#0F172A}
+.stApp .hero{background:linear-gradient(120deg,#1E1B4B,#4338CA 55%,#7C3AED);padding:1.6rem 2rem;border-radius:16px;
+  margin-bottom:1rem;box-shadow:0 6px 18px rgba(30,27,75,.35)}
+.stApp .hero h1{margin:0;font-size:2.1rem;color:#FFFFFF !important}
+.stApp .hero p{margin:.4rem 0 0;font-size:1.02rem;line-height:1.5;color:#F8FAFC !important}
+.stApp .hero b{color:#FDE68A !important}
+.stApp .card{background:#FFFFFF;border:2px solid #4F46E5;border-top:7px solid #4F46E5;border-radius:12px;
+  padding:.8rem .9rem;height:100%;font-size:.85rem;box-shadow:0 3px 10px rgba(79,70,229,.25)}
+.stApp .card, .stApp .card *{color:#0F172A !important}
+.stApp .card b{font-size:.95rem;color:#1E1B4B !important}
+.stApp .chair{border-color:#7C3AED;border-top-color:#7C3AED;background:#F3EEFF}
+.stApp .big{font-size:2.2rem;font-weight:700;color:#3730A3;line-height:1.1}
+/* result tab bar: white strip so tabs stand out */
+.stApp div[data-baseweb="tab-list"]{background:#FFFFFF;border-radius:10px;padding:6px 8px 12px;
+  overflow-x:auto !important;overflow-y:hidden !important}
+.stApp button[data-baseweb="tab"] p{font-weight:600;color:#0F172A !important;font-size:.95rem}
+.stApp button[data-baseweb="tab"][aria-selected="true"] p{color:#4338CA !important}
 
-/* Always-visible scrollbars (Chrome, Edge, Safari) */
-*::-webkit-scrollbar{width:14px;height:14px}
-*::-webkit-scrollbar-track{background:#D1D5DB;border-radius:8px}
-*::-webkit-scrollbar-thumb{background:#4F46E5;border-radius:8px;border:3px solid #D1D5DB}
-*::-webkit-scrollbar-thumb:hover{background:#3730A3}
-*::-webkit-scrollbar-corner{background:#D1D5DB}
+/* ---------- Always-visible scrollbars ---------- */
+/* Streamlit sets its own scrollbar-width/color; reset to auto so the custom bars below apply (Chrome/Edge/Safari) */
+*{scrollbar-width:auto !important;scrollbar-color:auto !important}
+*::-webkit-scrollbar{width:16px;height:16px;display:block}
+*::-webkit-scrollbar-track{background:#94A3B8;border-radius:10px}
+*::-webkit-scrollbar-thumb{background:#312E81;border-radius:10px;border:3px solid #94A3B8;min-height:40px;min-width:40px}
+*::-webkit-scrollbar-thumb:hover{background:#1E1B4B}
+*::-webkit-scrollbar-corner{background:#94A3B8}
 /* Firefox */
-@supports (-moz-appearance:none){*{scrollbar-width:auto;scrollbar-color:#4F46E5 #D1D5DB}}
-/* Result tab bar: make it scrollable with a visible bar */
-div[data-baseweb="tab-list"]{overflow-x:auto !important;overflow-y:hidden !important;padding-bottom:10px}
-div[data-baseweb="tab-list"]::-webkit-scrollbar{height:12px}
+@supports (-moz-appearance:none){*{scrollbar-width:auto !important;scrollbar-color:#312E81 #94A3B8 !important}}
 </style>""", unsafe_allow_html=True)
 
 REVIEWERS = ["structure", "problem", "method", "writing"]
 ORDER = REVIEWERS + ["chair"]
 ICONS = {"structure": "📑", "problem": "🎯", "method": "🔬", "writing": "✍️", "chair": "👨‍⚖️"}
 AGENT_LABELS_ALL = {**AGENT_LABELS, "chair": "Panel Chair"}
+TAB_NAMES = {"structure": "Structure", "problem": "Problem", "method": "Methodology", "writing": "Writing"}
 
 
 # ------------------------------------------------------------------ helpers
@@ -145,9 +158,9 @@ def render_result(res):
                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     st.download_button("⬇️ Download report (Markdown)", res["md"], "ScholarPanel_Report.md", "text/markdown")
 
-    st.caption("↔ More tabs are available: scroll the tab bar sideways to see Methodology, Writing and Sources & Checks.")
-    tabs = st.tabs(["👨‍⚖️ Panel Report"] + [f"{ICONS[k]} {AGENT_LABELS[k].split(' & ')[0]}" for k in REVIEWERS]
-                   + ["📚 Sources & Checks"])
+    st.caption("Click a tab to read each reviewer's findings and the guideline sources. If the tab bar is wider than your window, scroll it sideways.")
+    tabs = st.tabs(["👨‍⚖️ Panel Report"] + [f"{ICONS[k]} {TAB_NAMES[k]}" for k in REVIEWERS]
+                   + ["📚 Sources"])
     with tabs[0]:
         st.markdown(res["chair"])
     for t, k in zip(tabs[1:5], REVIEWERS):
